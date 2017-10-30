@@ -445,8 +445,12 @@ class WPUM_Form_Register extends WPUM_Form {
 		}
 
 		// Check for errors.
-		$do_user = isset( $do_user['do_user'] ) ? $do_user['do_user'] : $do_user;
-
+		if (is_object($do_user)) {
+			    $do_user = isset( $do_user->do_user ) ? $do_user->do_user : $do_user;
+		} elseif (is_array($do_user)) {
+			    $do_user = isset( $do_user['do_user'] ) ? $do_user['do_user'] : $do_user;
+		}
+		
 		if ( is_wp_error( $do_user ) ) {
 
 			foreach ($do_user->errors as $error) {
